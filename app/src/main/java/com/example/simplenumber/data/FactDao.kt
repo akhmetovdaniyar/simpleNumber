@@ -7,6 +7,6 @@ import androidx.room.Query
 interface FactDao {
 
     @Query("SELECT Fact FROM main WHERE N = :numberfact")
-    suspend fun getFact(numberfact: Int)
+    suspend fun getFact(numberfact: Int): String
 
 }

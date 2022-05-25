@@ -16,7 +16,7 @@ abstract class FactDatabase : RoomDatabase () {
                 synchronized(this) {
                     INSTANCE =
                         Room.databaseBuilder(context, FactDatabase::class.java, "fact_database")
-                            .createFromAsset("SimpleNumberFacts.db")
+                            .createFromAsset("assets/SimpleNumberFacts.db")
                             .build()
                 }
             }
