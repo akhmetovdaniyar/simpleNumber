@@ -10,6 +10,8 @@ class MainViewModel: ViewModel() {
     private var outLiveMutable = MutableLiveData<String>()
     val outLive: LiveData<String> = outLiveMutable
 
+
+
     fun checkNumber(num: String) {
         if (num.isEmpty()) {
             outLiveMutable.value = "Введите число"
