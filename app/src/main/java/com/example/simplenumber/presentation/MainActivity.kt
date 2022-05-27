@@ -37,7 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener {
             val oncheck = dataEditView.text.toString()
-
+            vm.factLive.observe(this, Observer {
+                factTextView.text = it
+            })
             vm.checkNumber(oncheck) }
     }
 }
