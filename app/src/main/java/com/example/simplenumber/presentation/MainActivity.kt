@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.simplenumber.R
-
+import com.example.simplenumber.data.DatabaseBuilder
+import com.example.simplenumber.data.DatabaseHelperImpl
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val sendButton = findViewById<Button>(R.id.buttonGet)
         val factTextView = findViewById<TextView>(R.id.textFact)
 
-
+        val daHelp = DatabaseHelperImpl(factDatabase = DatabaseBuilder.getDatabase(applicationContext))
 
         vm.outLive.observe(this, Observer {
             resultTextView.text = it
@@ -37,9 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener {
             val oncheck = dataEditView.text.toString()
-            vm.factLive.observe(this, Observer {
-                factTextView.text = it
-            })
-            vm.checkNumber(oncheck) }
+            vm.checkNumber(oncheck)
+        }
     }
 }

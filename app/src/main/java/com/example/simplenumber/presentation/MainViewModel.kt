@@ -3,20 +3,13 @@ package com.example.simplenumber.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.simplenumber.data.DatabaseHelperImpl
+import com.example.simplenumber.data.FactDao
 import com.example.simplenumber.domain.usecase.GetResultUsecase
-import kotlin.random.Random
 
 class MainViewModel: ViewModel() {
 
-
-
     private var outLiveMutable = MutableLiveData<String>()
     val outLive: LiveData<String> = outLiveMutable
-
-    private var factLiveMutable = MutableLiveData<String>()
-    val factLive: LiveData<String> = factLiveMutable
-
 
     fun checkNumber(num: String) {
         if (num.isEmpty()) {
@@ -26,6 +19,12 @@ class MainViewModel: ViewModel() {
             val out = GetResultUsecase(onnum).calc()
             outLiveMutable.value = out
         }
-        //factLiveMutable.value = DatabaseHelperImpl().getFact(Random(7).toString())
+    }
+
+    private var factDao: FactDao? = null
+    private var factLiveMutable = MutableLiveData<String>()
+    val factLive: LiveData<String> = factLiveMutable
+    suspend fun getFact(q: Int) {
+        factLiveMutable.value = factDao?.getFact(q)
     }
 }
