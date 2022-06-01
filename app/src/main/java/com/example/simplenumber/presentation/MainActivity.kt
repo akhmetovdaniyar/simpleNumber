@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var vm: MainViewModel
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         val factTextView = findViewById<TextView>(R.id.textFact)
 
         val daHelp = DatabaseHelperImpl(factDatabase = DatabaseBuilder.getDatabase(applicationContext))
+        val text = daHelp.getFact(2)
 
         vm.outLive.observe(this, Observer {
             resultTextView.text = it
@@ -39,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         sendButton.setOnClickListener {
             val oncheck = dataEditView.text.toString()
             vm.checkNumber(oncheck)
+            factTextView.text = text
+            /*vm.getRandom()
+            vm.factLive.observe(this, Observer {
+                factTextView.text = it
+            })*/
         }
     }
 }

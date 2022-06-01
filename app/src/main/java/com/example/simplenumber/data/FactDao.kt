@@ -7,5 +7,5 @@ import kotlin.random.Random
 @Dao
 interface FactDao {
     @Query("SELECT Fact FROM main WHERE N = :numberfact")
-    suspend fun getFact(numberfact: Int): String
+    fun getFact(numberfact: Int): String
 }
