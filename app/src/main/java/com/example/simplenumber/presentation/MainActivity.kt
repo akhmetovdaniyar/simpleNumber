@@ -8,15 +8,20 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.simplenumber.R
-import com.example.simplenumber.data.DatabaseBuilder
 import com.example.simplenumber.data.DatabaseHelperImpl
+import com.example.simplenumber.data.FactDatabase
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var vm: MainViewModel
 
-
+    var database: List<String> = listOf("")
+    var fact: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,18 +36,22 @@ class MainActivity : AppCompatActivity() {
         dataEditView.inputType = TYPE_CLASS_NUMBER
         val sendButton = findViewById<Button>(R.id.buttonGet)
         val factTextView = findViewById<TextView>(R.id.textFact)
-
-        val daHelp = DatabaseHelperImpl(factDatabase = DatabaseBuilder.getDatabase(applicationContext))
-        val text = daHelp.getFact(2)
-
+        fun addUi() {
+            lifecycleScope.launch() {
+                val daHelp = DatabaseHelperImpl(factDatabase = FactDatabase.DatabaseBuilder.getDatabase(applicationContext))
+                database = daHelp.getFact()
+            }
+            fact = database.elementAt(Random.nextInt(7))
+        }
+        addUi()
         vm.outLive.observe(this, Observer {
             resultTextView.text = it
         })
-
         sendButton.setOnClickListener {
             val oncheck = dataEditView.text.toString()
             vm.checkNumber(oncheck)
-            factTextView.text = text
+            addUi()
+            factTextView.text = fact
             /*vm.getRandom()
             vm.factLive.observe(this, Observer {
                 factTextView.text = it

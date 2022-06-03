@@ -1,5 +1,5 @@
 package com.example.simplenumber.domain.repository
 
 interface DatabaseHelper {
-    fun getFact(n: Int): String
+    suspend fun getFact(): List<String>
 }
